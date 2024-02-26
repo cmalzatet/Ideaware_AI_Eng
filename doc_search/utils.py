@@ -5,7 +5,7 @@ from langchain_openai import OpenAIEmbeddings
 import os
 
 # os.environ["OPENAI_API_KEY"] = getpass.getpass()
-os.environ["OPENAI_API_KEY"] = "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"
+os.environ["OPENAI_API_KEY"] = "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"
 
 def extract_text_from_doc(doc:Document)->str:
     content = ''
