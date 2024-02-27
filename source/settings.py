@@ -22,7 +22,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-4=j*fm=3ygm8b7(76lms8x$!j6a**bk0b-9i+r=e%@5^ar9+##'
+
 OPENAI_API_KEY = os.environ.get('OPENAI_API_KEY')
+QDRANT_API_KEY = os.environ.get('QDRANT_API_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -123,3 +125,5 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+QDRANT_HOST = "https://0732b448-0d48-45fa-9208-59246b30674c.us-east4-0.gcp.cloud.qdrant.io:6333"
