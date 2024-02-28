@@ -1,7 +1,10 @@
 import requests
+import os
 
 # URL del endpoint
-url = 'http://127.0.0.1:8000/search-documents/'
+APP_PORT = os.environ.get('APP_PORT')
+
+url = f'http://127.0.0.1:{APP_PORT}/search-documents/'
 
 # Archivo .docx que quieres enviar
 query = input()
