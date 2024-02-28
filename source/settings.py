@@ -126,4 +126,4 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-QDRANT_HOST = "https://0732b448-0d48-45fa-9208-59246b30674c.us-east4-0.gcp.cloud.qdrant.io:6333"
+QDRANT_HOST = 'http://localhost:6333'

@@ -13,16 +13,14 @@ import uuid
 from typing import List
 
 # os.environ["OPENAI_API_KEY"] = getpass.getpass()
-os.environ["OPENAI_API_KEY"] = ""
-os.environ["QDRANT_API_KEY"] = "F1zLVHYwI-dkDcAQmoRGNn_666eqsKT6V6sGw_VtL7vHjD_iV8MaUw"
+os.environ["OPENAI_API_KEY"] = "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"
 
-def extract_text_from_doc(doc:Document)->list:    
-    return [paragraph for paragraph in doc.paragraphs]
+def extract_text_from_doc(doc:Document)->list:
+    return [paragraph.text for paragraph in doc.paragraphs]
 
-def save_temporal_file(content:list):
-     
-    tempfile_path = f"../temp_files/tempdoc_{uuid.uuid4().hex}.txt"    
-    with open(tempfile_path) as temporal_file:
+def save_temporal_file(title:str ,content:list):     
+    tempfile_path = f"./temp_files/tempdoc_{title}.txt"    
+    with open(tempfile_path, 'w') as temporal_file:
         temporal_file.writelines(content)
         
     return tempfile_path
@@ -43,6 +41,9 @@ def split_document(document : List[Document]):
 def embedding_instance_setup(motor = 'openai'):
     if motor == 'openai':
         return OpenAIEmbeddings()
+    
+def delete_temp_file(tempfile_path:str):
+    os.remove(tempfile_path)
 
 def save_embedding_to_vdb(embedding: OpenAIEmbeddings,
                           docs: List[Document]):
@@ -52,19 +53,18 @@ def save_embedding_to_vdb(embedding: OpenAIEmbeddings,
             docs,
             embedding,
             url=settings.QDRANT_HOST,
-            prefer_grpc=True,
-            api_key=settings.QDRANT_API_KEY,
             collection_name="documents"
         )
         return True
     
     except:
         return False
-        
     
+def setup_client():
+    return QdrantClient(settings.QDRANT_HOST)
+
+def load_collection(client:QdrantClient, embeddings:OpenAIEmbeddings, collection_name:str):
+    return Qdrant(client=client, embeddings=embeddings, collection_name=collection_name)
     
-def generate_embedding(doc_text:str):
-    
-    embeddings = OpenAIEmbeddings(model="text-embedding-3-small",)
-    embedded_text = embeddings.embed_query(doc_text)
-    return embedded_text
+def search_query(collection:Qdrant, query: str):
+    return collection.similarity_search_with_score(query)[:3]

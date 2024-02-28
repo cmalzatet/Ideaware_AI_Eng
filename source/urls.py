@@ -16,11 +16,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from doc_search.views import upload_docx
+from doc_search.views import upload_docx, search_documents
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('upload-docx/', upload_docx, name='upload_docx'),
+    path('search-documents/', search_documents, name='search_documents'),
 ]
 
 
